@@ -1,9 +1,8 @@
 package fr.polytech.todo.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,23 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.polytech.todo.Todo;
+import fr.polytech.todo.TodoDAO;
 
 /**
  * Servlet implementation class TodoServlet
  */
 @WebServlet("/Todo")
 public class TodoServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-    private static List<Todo> todos;
+	
+	@EJB
+    private TodoDAO todoDao;
     
     /**
      * @see HttpServlet#HttpServlet()
      */
     public TodoServlet() {
         super();
-        if (todos == null) {
-        	todos = new ArrayList<Todo>();
-        }
     }
 
 	/**
@@ -43,9 +43,9 @@ public class TodoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
-		Todo todo = new Todo(todos.size(), name, desc);
-		todos.add(todo);
-		request.setAttribute("todos", todos);
+		Todo todo = new Todo(name, desc);
+		todoDao.create(todo);
+		request.setAttribute("todos", todoDao.all());
 		request.getRequestDispatcher("Todo.jsp").forward(request, response);
 	}
 

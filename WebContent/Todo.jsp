@@ -26,7 +26,7 @@
 			<tr>
 				<td>${todo.id}</td>
 				<td>${todo.name}</td>
-				<td>${todo.desc}</td>
+				<td>${todo.description}</td>
 			</tr>
 		</c:forEach>
 	</table>

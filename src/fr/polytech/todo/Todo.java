@@ -1,16 +1,27 @@
 package fr.polytech.todo;
 
-public class Todo {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name="Todo")
+public class Todo {	
+	
+	@javax.persistence.Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String name;
-	private String desc;
+	private String description;
 	
-	public Todo(long id, String name, String desc) {
-		super();
-		this.id = id;
+	public Todo() {
+	}
+	
+	public Todo(String name, String description) {
 		this.name = name;
-		this.desc = desc;
+		this.description = description;
 	}
 	
 	public long getId() {
@@ -28,18 +39,19 @@ public class Todo {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	
-	public void setDesc(String desc) {
-		this.desc = desc;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[" + id + "] " + name + ": " + desc;
+		return "[" + id + "] " + name + ": " + description;
 	}
 	
 }
